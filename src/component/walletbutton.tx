@@ -1,0 +1,41 @@
+import Image from 'next/image'
+import { Button } from "@/components/ui/button"
+import { DotFilledIcon } from "lucide-react"
+
+interface EIP6963ProviderDetail {
+  info: {
+    icon: string;
+    name: string;
+  };
+  // Add other properties as needed
+}
+
+interface WalletButtonProps {
+  handleConnect: (walletDetails: EIP6963ProviderDetail) => void;
+  walletDetails: EIP6963ProviderDetail;
+  isConnected?: boolean;
+}
+
+const WalletButton = ({ walletDetails, handleConnect, isConnected }: WalletButtonProps) => {
+  return (
+    <Button
+      onClick={() => handleConnect(walletDetails)}
+      className="flex items-center space-x-2"
+      disabled={isConnected}
+    >
+      <Image
+        className="rounded"
+        src={walletDetails.info.icon}
+        alt={walletDetails.info.name}
+        width={20}
+        height={20}
+      />
+      <span>{walletDetails.info.name}</span>
+      {isConnected && (
+        <DotFilledIcon color="green" size={24} />
+      )}
+    </Button>
+  );
+};
+
+export default WalletButton;
